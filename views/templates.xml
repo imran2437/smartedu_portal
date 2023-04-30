@@ -1,0 +1,1764 @@
+<odoo>
+  <data>
+    <template id="portal_my_home" name="My POrtal" inherit_id="portal.portal_my_home">
+      <xpath expr="//div[contains(@class, &apos;o_portal_my_home&apos;)]" position="before">
+        <!-- <div class="row">
+          <div class="col-md-6 col-xs-6" id="std_dashboard">
+            <div style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);" class="card gap-1">
+              <div class="card-body bg-primary">
+                <div class="card-body">
+                  <a href="/my/admission/online/applications/student" class="card-link">Student
+                    Dashboard</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-6" id="parent_dashboard">
+            <div style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);" class="card gap-1">
+              <div class="card-body bg-primary">
+                <div class="card-body">
+                  <a href="/my/admission/online/applications/parent" class="card-link">Parent
+                    Dashboard</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);" class="card gap-1">
+              <div class="card-body bg-primary">
+                <div class="card-body">
+                  <!-- <a href="/my/admission/online/applications/student" class="card-link">Student -->
+                  <!-- Dashboard</a> -->
+                  <li><a href="/partner">Profile</a></li>
+                </div>
+              </div>
+            </div>
+        <!-- <li><a href="/partner">Profile</a></li> -->
+
+      </xpath>
+    </template><!-- Student Dashboard-->
+    <template id="se_student_template" name="My Student Template">
+      <t t-call="portal.portal_layout">
+        <t t-foreach="info" t-as="info"/>
+        <div class="container ">
+          <div class="row">
+            <div class="col-md-4 col-sm-12 p-2  ">
+              <div style="background: linear-gradient(to bottom, #20cdf888, #000000); box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);" class="card">
+                <div class="card-header fw-5 text-white">Personal Infromation</div>
+                <div class="my-2 card-body">
+                  <div>
+                    <div class="text-center"><!-- /smartedu_portal/static/src/img/pic1.png -->
+                      <img t-attf-src="data:image/png;base64,{{info.stu_image}}" alt="avatar" style="height: 120px;" class="img-thumbnail"></img>
+                    </div>
+                  </div>
+                  <hr/>
+                  <div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">Full
+                        Name:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.name"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">Date
+                        of Birth:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.birth_date"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">Blood
+                        Group:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.blood_group"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Email:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.email"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Student ID:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.student_id_string"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Gender:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.gender"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Language:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.lang"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Mobile:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.phone"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8  col-sm-12 p-2 ">
+              <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+              <div class="card" style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);">
+                <div class="card-header bg-dark text-white">
+                  Student Progress
+                </div>
+                <div class="card-body">
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div><!-- Graph Script 'Do Not Touch Without permission' -->
+              <script>
+                window.onload = function() {
+                var ctx = document.getElementById(&apos;myChart&apos;).getContext(&apos;2d&apos;);
+                var chart = new Chart(ctx, {
+                type: &apos;bar&apos;,
+                data: {
+                labels: [&apos;Red&apos;, &apos;Blue&apos;, &apos;Yellow&apos;, &apos;Green&apos;, &apos;Purple&apos;, &apos;Orange&apos;],
+                datasets: [{
+                label: &apos;# of Votes&apos;,
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                &apos;rgba(255, 99, 132, 0.2)&apos;,
+                &apos;rgba(54, 162, 235, 0.2)&apos;,
+                &apos;rgba(255, 206, 86, 0.2)&apos;,
+                &apos;rgba(75, 192, 192, 0.2)&apos;,
+                &apos;rgba(153, 102, 255, 0.2)&apos;,
+                &apos;rgba(255, 159, 64, 0.2)&apos;
+                ],
+                borderColor: [
+                &apos;rgba(255, 99, 132, 1)&apos;,
+                &apos;rgba(54, 162, 235, 1)&apos;,
+                &apos;rgba(255, 206, 86, 1)&apos;,
+                &apos;rgba(75, 192, 192, 1)&apos;,
+                &apos;rgba(153, 102, 255, 1)&apos;,
+                &apos;rgba(255, 159, 64, 1)&apos;
+                ],
+                borderWidth: 1
+                }]
+                },
+                options: {
+                scales: {
+                yAxes: [{
+                ticks: {
+                beginAtZero: true
+                }
+                }]
+                }
+                }
+                });
+                };
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="container p-5">
+          <div class="row">
+            <div class="col-sm-12 col-md-4 ">
+              <div class="card" style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);">
+                <div class="card-body">
+                  <h5 class="card-title">Applied
+                    Application List</h5>
+                  <a href="/my/admission/online/applications/list" class="btn btn-primary">Application
+                    List</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="card" style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);">
+                <div class="card-body">
+                  <h5 class="card-title">Applied
+                    Application List</h5>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <div class="card" style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);">
+                <div class="card-body">
+                  <h5 class="card-title">Applied
+                    Application List</h5>
+                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+    </template><!-- Application LIst -->
+    <template id="se_student_application_list">
+      <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+      <t t-call="portal.portal_layout">
+        <t t-foreach="informations" t-as="informations"/>
+        <div class="container">
+          <table class="table table-striped-columns table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Admission
+                  No:</th>
+                <th scope="col">Program</th>
+                <th scope="col">Applicant Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <t t-esc="informations.application_serial_number"/>
+                </td>
+                <td>
+                  <t t-esc="informations.program_id.name"/>
+                </td>
+                <td>
+                  <t t-esc="informations.name"/>
+                </td>
+                <td>
+                  <t t-esc="informations.email"/>
+                </td>
+                <td>
+                  <a href="/my/admission/online/applications/list/form">
+                    <button name="view" class="btn btn-outline-info btn-sm">
+                      View</button>
+                  </a>
+                  <a href="/my/admission/online/applications/list/form?informations={{ res_user.user_id or &apos;&apos; }}">
+                    <button name="update" class="btn btn-outline-primary btn-sm">
+                      Update</button>
+                  </a><!--  -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </t>
+    </template><!-- Admission Form TEmplate -->
+    <template id="se_student_admission_template" name="My Student Admission Template">
+      <t t-call="portal.portal_layout">
+        <link href="/smartedu_portal/static/src/css/custom.css" rel="stylesheet" type="text/css"/>
+        <script src="/smartedu_portal/static/src/js/custom.js" type="text/javascript"></script>
+        <div>
+          <body>
+            <div id="topp"></div>
+            <div class="main_container py-2">
+              <div class="col">
+                <div id="step1" style="
+            clip-path: polygon(
+              75% 0%,
+              100% 50%,
+              75% 100%,
+              0% 100%,
+              0% 50%,
+              0% 0%
+            );
+          " class="minus_margin color1 height">
+                  <h6 class="mx-auto p-3 text-center">
+                    <div>Step
+                      1</div>
+                    <div>Text</div>
+                  </h6>
+                </div>
+              </div>
+              <div class="col">
+                <div id="step2" style="
+            clip-path: polygon(
+              75% 0%,
+              100% 50%,
+              75% 100%,
+              0% 100%,
+              25% 50%,
+              0% 0%
+            );
+          " class="minus_margin color2 height">
+                  <h6 class="mx-auto p-3 text-center">
+                    <div>Step
+                      2</div>
+                    <div>Text</div>
+                  </h6>
+                </div>
+              </div>
+              <div class="col">
+                <div id="step3" style="
+            clip-path: polygon(
+              75% 0%,
+              100% 50%,
+              75% 100%,
+              0% 100%,
+              25% 50%,
+              0% 0%
+            );
+          " class="minus_margin color3 height">
+                  <h6 class="mx-auto p-3 text-center">
+                    <div>Step
+                      3</div>
+                    <div>Text</div>
+                  </h6>
+                </div>
+              </div>
+              <div class="col">
+                <div id="step4" style="
+            clip-path: polygon(
+              75% 0%,
+              100% 50%,
+              75% 100%,
+              0% 100%,
+              25% 50%,
+              0% 0%
+            );
+          " class="minus_margin color4 height">
+                  <h6 class="text-center sm:mx-sm-2 mx-auto p-3">
+                    <div>Step
+                      4</div>
+                    <div>Text</div>
+                  </h6>
+                </div>
+              </div>
+              <div class="col">
+                <div id="step5" style="
+            clip-path: polygon(
+              100% 0%,
+              100% 100%,
+              75% 100%,
+              0% 100%,
+              25% 50%,
+              0% 0%
+            );
+          " class="minus_margin color5 height">
+                  <h6 class="text-center sm:mx-sm-2 mx-auto p-3">
+                    <div>Step
+                      5</div>
+                    <div>Text</div>
+                  </h6>
+                </div>
+              </div>
+            </div>
+            <form role="form" class="_container" method="post" action="/my/admission/online/applications/update">
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+              <t t-foreach="student_info" t-as="student_info">
+                <section id="section1" style="display: block">
+                  <div class="container">
+                    <h3 class="text-center my-2">Admission
+                      Details</h3>
+                    <div class="form-check col ">
+                      <div class="p-4">
+                        <input class="form-check-input" type="radio" name="is_student" id="is_student"/>
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          Is Alumni ?
+                        </label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group mb-3">
+                        <label for="firstName">First
+                          Name</label>
+                        <input type="text" class="form-control" name="first_name" t-att-value="student_info.first_name" id="first_name" placeholder="Enter First Name"/>
+                      </div>
+                      <div class="form-group mb-3">
+                        <label for="middleName">Middle Name</label>
+                        <input type="text" class="form-control" name="middle_name" t-esc="student_info.middle_name" t-att-value="student_info.middle_name" id="middle_name" placeholder="Enter Middle Name"/>
+                      </div>
+                      <div class="form-group mb-3">
+                        <label for="lastName">Last
+                          Name</label>
+                        <input type="text" class="form-control" name="last_name" t-att-value="student_info.last_name" id="last_name" placeholder="Enter Last Name"/>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="row ">
+                        <div class="col my-1 mb-3">
+                          <label>Student
+                            ID</label>
+                          <input name="student_id_text" t-att-value="student_info.student_id_text" id="student_id_text" type="text" class="form-control" placeholder="Type your Student ID"/>
+                        </div>
+                      </div>
+                      <div class="row my-1">
+                        <div class="col-md-6 col-sm-12 mb-3">
+                          <div>
+                            <label for="application_serial_number">Application
+                              Serial No.</label>
+                            <input type="text" class="form-control" name="application_serial_number" t-att-value="student_info.application_serial_number" id="application_serial_number" placeholder=""/>
+                          </div>
+                          <div class="mb-3">
+                            <label>Register
+                              ID</label>
+                            <input type="text" class="form-control" name="application_serial_number" t-att-value="student_info.application_serial_number" id="application_serial_number" placeholder=""/>
+                          </div>
+                          <div class="mb-3">
+                            <label>Application
+                              Number</label>
+                            <input type="text" name="application_number" t-att-value="student_info.application_number" id="application_number" class="form-control" placeholder=""/>
+                          </div>
+                        </div>
+                        <div class="col-md-6  col-sm-12">
+                          <div class="form-group mb-3">
+                            <label for="application_date">Application
+                              Date</label>
+                            <input type="date" class="form-control" name="application_date" t-att-value="student_info.application_date" id="application_date" placeholder="Enter Date of Application"/>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for="admission_date">Admission
+                              Date</label>
+                            <input type="date" class="form-control" name="admission_date" t-att-value="student_info.admission_date" id="admission_date" placeholder="Enter Date of Admission"/>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for="admission_expire_date">Admission
+                              End Date</label>
+                            <input type="date" class="form-control" name="admission_expire_date" t-att-value="student_info.admission_expire_date" id="admission_expire_date" placeholder="Enter End Date of Admission"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row my-5">
+                      <div class="col-md-6 col-sm-12">
+                        <div class="form-group mb-3 ">
+                          <label for="program_id">Select
+                            Program</label>
+                          <select class="form-control" id="program_id" name="program_id">
+                            <option value="">Choose Program</option>
+                            <t t-foreach="program" t-as="program">
+                              <option t-att-value="program.id" t-att-selected="program.id == student_info.program_id.id">
+                                <t t-esc="program.name"/>
+                              </option>
+                            </t>
+                          </select>
+                        </div><!--  -->
+                        <div class="form-group mb-3 ">
+                          <label for="curriculum_id">
+                            Curriculum</label>
+                          <select class="form-control" id="curriculum_id" t-att-value="student_info.curriculum_id" name="curriculum_id">
+                            <option>Choose
+                              Curriculum</option>
+                            <option value="british" t-att-selected="student_info.curriculum_id == &apos;british&apos;">British</option>
+                            <option value="national" t-att-selected="student_info.curriculum_id == &apos;national&apos;">
+                              National</option>
+                          </select>
+                        </div><!-- <div class="form-group mb-3">
+                        <label for="curriculum_id">
+                            Curriculumn</label>
+                          <select class="form-control" id="curriculum_id" name="curriculum_id"
+                            t-att-value="student_info.curriculum_id">
+                            <option value="">Choose Curriculum</option>
+                            <option value="british"
+                              t-att-selected="student_info.curriculum_id === 'british'">
+                              British</option>
+                            <option value="national"
+                              t-att-selected="student_info.curriculum_id === 'national'">National</option>
+                          </select>
+
+                        </div> -->
+                        <div class="form-group mb-3">
+                          <label for="batch_id">
+                            Choose Batch</label>
+                          <select class="form-control" id="batch_id" name="batch_id">
+                            <option>Choose Batch</option>
+                            <t t-foreach="batch" t-as="batch">
+                              <option t-att-value="batch.id" t-att-selected="batch.id == student_info.batch_id.id">
+                                <t t-esc="batch.name"/>
+                              </option>
+                            </t>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-sm-12">
+                        <div class="form-group mb-3">
+                          <label for="fees">Admission
+                            Form Fee</label>
+                          <div class="input-group">
+                            <input id="fees" t-att-value="student_info.fees" name="fees" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                            <span class="input-group-text">৳</span>
+                          </div>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="admission_fee">Admission
+                            Fee </label>
+                          <div class="input-group">
+                            <input id="admission_fee" t-att-value="student_info.admission_fee" name="admission_fee" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                            <span class="input-group-text">৳</span>
+                          </div>
+                        </div><!-- <div class="form-group mb-3">
+                        <label for="fees_term_id">Fees
+                            Type</label>
+                        <select class="form-control" id="fees_term_id" t-att-value="student_info.fees_term_id"
+                          name="fees_term_id">
+                          <option>Choose Fees Type</option>
+                          <option>Type One</option>
+                          <option>Type
+                              Two</option>
+                          </select>
+                        </div> -->
+                        <div class="form-group mb-3">
+                          <label for="order_id">Registration
+                            Fees Ref.</label>
+                          <input type="text" id="order_id" t-att-value="student_info.order_id" name="order_id" class="form-control" placeholder=""/>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <div class="row ">
+                        <div class="col-md-6 col-sm-12">
+                          <div>
+                            <h5>Faculty
+                              &amp; Department</h5>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for="academic_faculty_id">
+                              Faculty</label>
+                            <select class="form-control" id="academic_faculty_id" t-att-value="student_info.academic_faculty_id" name="academic_faculty_id">
+                              <option>Choose
+                                Faculty</option>
+                              <option>Type One</option>
+                              <option>Type Two</option>
+                            </select>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for="department_id">
+                              Department</label>
+                            <select class="form-control" id="department_id" t-att-value="student_info.department_id" name="department_id">
+                              <option>Choose Department</option>
+                              <option>Type
+                                One</option>
+                              <option>Type Two</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <div>
+                            <h5>
+                              Semester</h5>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label for="semester_id">
+                              Semester</label>
+                            <select class="form-control" id="semester_id" name="semester_id">
+                              <option>Choose
+                                Semester</option>
+                              <t t-foreach="semester" t-as="semester">
+                                <option t-att-value="semester.id" t-att-selected="semester.id == student_info.semester_id.id">
+                                  <t t-esc="semester.name"/>
+                                </option>
+                              </t>
+                            </select>
+                          </div><!-- <div class="form-group mb-3">
+                          <label for="semester_type_id">Semester
+                              Type</label>
+                            <select class="form-control" id="semester_type_id"
+                              name="semester_type_id">
+                              <option>Choose
+                                Semester Type</option>
+                              <t t-foreach="semester_type" t-as="semester_type">
+                                <option t-att-value="semester_type.id"
+                                  t-att-selected="semester_type.id == student_info.semester_type_id.id">
+                                  <t t-esc="semester_type.name" />
+                                </option>
+                              </t>
+
+                            </select>
+                          </div> -->
+                          <div class="form-group mb-3">
+                            <label for="semester_year_string">Semester
+                              Year</label>
+                            <select class="form-control" id="semester_year_string" t-att-value="student_info.semester_year_string" name="semester_year_string">
+                              <option>Choose Semester Year</option>
+                              <option>Type
+                                One</option>
+                              <option>Type Two</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div></div>
+                    <div>
+                      <h5 class="my-4">Academic</h5>
+                      <div class="row">
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="form_type">Form Type</label>
+                          <select class="form-control" id="form_type" t-att-value="student_info.form_type" name="form_type">
+                            <option>Choose
+                              Form Type</option>
+                            <option value="local_bachelor_program_hsc" t-att-selected="student_info.form_type == &apos;local_bachelor_program_hsc&apos;">
+                              Local-Bachelor Program - HSC</option>
+                            <option value="local_bachelor_program_a_level" t-att-selected="student_info.form_type == &apos;local_bachelor_program_a_level&apos;">Local-Bachelor
+                              Program - A-Level</option>
+                            <option value="local_bachelor_program_diploma" t-att-selected="student_info.form_type == &apos;local_bachelor_program_diploma&apos;">Local-Bachelor
+                              Program - Diploma</option>
+                            <option value="local_masters_program_bachelor" t-att-selected="student_info.form_type == &apos;local_masters_program_bachelor&apos;">Local-Masters
+                              Program - Bachelor</option>
+                            <option value="international_bachelor_program_a_level" t-att-selected="student_info.form_type == &apos;international_bachelor_program_a_level&apos;">International-Bachelor
+                              Program</option>
+                            <option value="international_masters_program" t-att-selected="student_info.form_type == &apos;international_masters_program&apos;">International
+                              - Masters Program</option>
+                          </select>
+                        </div>
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="form_apply_type">Apply
+                            Type</label>
+                          <select class="form-control" id="form_apply_type" t-att-value="student_info.form_apply_type" name="form_apply_type">
+                            <option>Choose
+                              Apply Type</option>
+                            <option value="offline" t-att-selected="student_info.form_apply_type == &apos;offline&apos;">
+                              Offline</option>
+                            <option value="online" t-att-selected="student_info.form_apply_type == &apos;online&apos;">Online</option>
+                          </select>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="student_type_id">Student
+                            Type</label>
+                          <select class="form-control" id="student_type_id" name="student_type_id">
+                            <option>Choose Student Type</option>
+                            <option t-foreach="type" t-as="type" t-att-value="type.id" t-att-selected="type.id == student_info.student_type_id.id">
+                              <t t-esc="type.name"/>
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="education_shift_id">Education
+                            Shift Type</label>
+                          <select class="form-control" id="education_shift_id" name="education_shift_id">
+                            <option>Choose Education Shift</option>
+                            <option t-foreach="shift" t-as="shift" t-att-value="shift.id" t-att-selected="shift.id == student_info.education_shift_id.id">
+                              <t t-esc="shift.name"/>
+                            </option>
+                          </select>
+                        </div>
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="campus_type">
+                            Campus </label>
+                          <select class="form-control" id="campus_type" t-att-value="student_info.campus_type" name="campus_type">
+                            <option>Choose Campus</option>
+                            <option value="on_campus" t-att-selected="student_info.campus_type == &apos;on_campus&apos;">On Campus
+                            </option>
+                            <option value="off_campus" t-att-selected="student_info.campus_type == &apos;off_campus&apos;">Off Campus</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <div>
+                        <a class="text-decoration-none" href="#topp">
+                          <button type="button" class="btn btn-outline-success my-5" onclick="nextSection()">
+                            Next
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </section><!-- Educational Details Section 2 -->
+                <section id="section2">
+                  <div class="container">
+                    <h3 class="my-2 text-center">Education
+                      Details</h3>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h5 class="my-4">Secondary School Certificate (SSC)</h5>
+                        <div class="form-row ">
+                          <div class="form-group mb-3 col">
+                            <label for="registration_number_ssc">Registration
+                              Number</label>
+                            <input type="text" class="form-control" id="registration_number_ssc" t-att-value="student_info.registration_number_ssc" name="registration_number_ssc" placeholder="Enter Registration Number"/>
+                          </div>
+                          <div class="form-group mb-3 col">
+                            <label for="roll_number_ssc">Roll
+                              Number</label>
+                            <input type="text" class="form-control" id="roll_number_ssc" t-att-value="student_info.roll_number_ssc" name="roll_number_ssc" placeholder="Enter Roll Number"/>
+                          </div>
+                          <div class="form-group mb-3 col">
+                            <label for="education_board_ssc_id">Education
+                              Board</label>
+                            <select class="form-control" id="education_board_ssc_id" name="education_board_ssc_id">
+                              <option>Choose Education Board</option>
+                              <option t-foreach="ssc" t-as="ssc" t-att-value="ssc.id" t-att-selected="ssc.id == student_info.education_board_ssc_id.id">
+                                <t t-esc="ssc.name"/>
+                              </option>
+                            </select>
+                          </div>
+                          <div class="form-group mb-3 col">
+                            <label for="year_ssc">Year
+                              of
+                              Completion</label>
+                            <input type="number" class="form-control" id="year_ssc" t-att-value="student_info.year_ssc" name="year_ssc" placeholder="Enter Year of Completion"/>
+                          </div>
+                        </div>
+                        <div class="form-group mb-3 col">
+                          <label for="ssc_gpa">
+                            Result</label>
+                          <input type="text" class="form-control" id="ssc_gpa" t-att-value="student_info.ssc_gpa" name="ssc_gpa" placeholder="Enter Field of Study"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="ssc_certificate">
+                            Certificate</label>
+                          <input type="file" class="form-control" id="ssc_certificate" t-att-value="student_info.ssc_certificate" name="ssc_certificate" placeholder="Upload Your Certificate"/><!-- <textarea
+                          class="form-control"
+                          id="ssc_certificate"
+                          t-att-value="student_info.ssc_certificate"
+                          name="ssc_certificate"
+                          rows="3"
+                        ></textarea> -->
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h5 class="my-4">Higher-Secondary
+                          School Certificate (HSC)</h5>
+                        <div class="form-row ">
+                          <div class="form-group mb-3 col">
+                            <label for="registration_number_hsc">Registration
+                              Number</label>
+                            <input type="text" class="form-control" id="registration_number_hsc" t-att-value="student_info.registration_number_hsc" name="registration_number_hsc" placeholder="Enter Registration Number"/>
+                          </div>
+                          <div class="form-group mb-3 col">
+                            <label for="roll_number_hsc">Roll
+                              Number</label>
+                            <input type="text" class="form-control" id="roll_number_hsc" t-att-value="student_info.roll_number_hsc" name="roll_number_hsc" placeholder="Enter Roll Number"/>
+                          </div>
+                          <div class="form-group mb-3 col">
+                            <label for="education_board_hsc_id">Education
+                              Board</label>
+                            <select class="form-control" id="education_board_hsc_id" name="education_board_hsc_id">
+                              <option>Choose Education Board</option>
+                              <option t-foreach="hsc" t-as="hsc" t-att-value="hsc.id" t-att-selected="hsc.id == student_info.education_board_hsc_id.id">
+                                <t t-esc="hsc.name"/>
+                              </option>
+                            </select>
+                          </div>
+                          <div class="form-group mb-3 col">
+                            <label for="year_hsc">Year
+                              of
+                              Completion</label>
+                            <input type="number" class="form-control" id="year_hsc" t-att-value="student_info.year_hsc" name="year_hsc" placeholder="Enter Year of Completion"/>
+                          </div>
+                        </div>
+                        <div class="form-group mb-3 col">
+                          <label for="hsc_gpa">
+                            Result</label>
+                          <input type="text" class="form-control" id="hsc_gpa" t-att-value="student_info.hsc_gpa" name="hsc_gpa" placeholder="Enter Field of Study"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="hsc_certificate">
+                            Certificate</label>
+                          <input type="file" class="form-control" id="hsc_certificate" t-att-value="student_info.hsc_certificate" name="hsc_certificate" placeholder="Upload Your Certificate"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row ">
+                      <div class="col-md-6">
+                        <h5 class="my-4">
+                          O-Level</h5>
+                        <div class="form-row ">
+                          <div class="form-group mb-3 col">
+                            <label for="education_board_o_level_id">Education Board</label>
+                            <select class="form-control" id="education_board_o_level_id" name="education_board_o_level_id">
+                              <option>Choose Education Board</option>
+                              <option t-foreach="o_level" t-as="o_level" t-att-value="o_level.id" t-att-selected="o_level.id == student_info.education_board_o_level_id.id">
+                                <t t-esc="o_level.name"/>
+                              </option>
+                            </select>
+                          </div><!-- <div class="form-group mb-3 col">
+                          <label for="inputRoll">Roll
+                            Number</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="inputInstitution"
+                            placeholder="Enter Roll Number"
+                          />
+                        </div> --><!-- <div class="form-group mb-3 col">
+                          <label for="admission_board_result_o_level_ids">
+                              Result</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="admission_board_result_o_level_ids"
+                              t-att-value="student_info.education_board_o_level_ids"
+                              name="education_board_o_level_id"
+                              placeholder="Enter Institution Name"
+                            />
+                          </div> -->
+                          <div class="form-group mb-3 col">
+                            <label for="passing_year_o_level">Year
+                              of
+                              Completion</label>
+                            <input type="number" class="form-control" id="passing_year_o_level" t-att-value="student_info.passing_year_o_level" name="passing_year_o_level" placeholder="Enter Year of Completion"/>
+                          </div>
+                        </div>
+                        <div class="form-group mb-3 col">
+                          <label for="admission_board_result_o_level_ids">Admission
+                            Board</label>
+                          <input type="text" class="form-control" id="admission_board_result_o_level_ids" t-att-value="student_info.admission_board_result_o_level_ids" name="admission_board_result_o_level_ids" placeholder="Enter Field of Study"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="o_level_certificate">
+                            Transcript</label>
+                          <input type="file" class="form-control" id="o_level_certificate" t-att-value="student_info.o_level_certificate" name="o_level_certificate" placeholder="Upload Your Certificate"/>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <h5 class="my-4">
+                          A-Level</h5>
+                        <div class="form-row ">
+                          <div class="form-group mb-3 col">
+                            <label for="education_board_a_level_id">Education Board</label>
+                            <select class="form-control" id="education_board_a_level_id" name="education_board_a_level_id">
+                              <option>Choose Education Board</option>
+                              <option t-foreach="a_level" t-as="a_level" t-att-value="a_level.id" t-att-selected="a_level.id == student_info.education_board_a_level_id.id">
+                                <t t-esc="a_level.name"/>
+                              </option>
+                            </select>
+                          </div><!-- <div class="form-group mb-3 col">
+                          <label for="inputRoll">Roll
+                            Number</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="inputInstitution"
+                            placeholder="Enter Roll Number"
+                          />
+                        </div> -->
+                          <div class="form-group mb-3 col">
+                            <label for="education_board_a_level_id">Admiossion
+                              Board</label>
+                            <input type="text" class="form-control" id="education_board_a_level_id" name="education_board_a_level_id" t-att-value="student_info.education_board_a_level_id" placeholder="Enter Institution Name"/>
+                          </div>
+                          <div class="form-group mb-3 col">
+                            <label for="passing_year_a_level">Year
+                              of
+                              Completion</label>
+                            <input type="number" class="form-control" id="passing_year_a_level" t-att-value="student_info.passing_year_a_level" name="passing_year_a_level" placeholder="Enter Year of Completion"/>
+                          </div>
+                        </div><!-- <div class="form-group mb-3 col">
+                        <label for="admission_board_result_a_level_ids">
+                            Result</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="admission_board_result_a_level_ids"
+                            t-att-value="student_info.admission_board_result_a_level_ids"
+                            name="admission_board_result_a_level_ids"
+                            placeholder="Enter Field of Study"
+                          />
+                        </div> -->
+                        <div class="form-group mb-3">
+                          <label for="a_level_certificate">
+                            Transcript</label>
+                          <input type="file" class="form-control" id="a_level_certificate" t-att-value="student_info.a_level_certificate" name="a_level_certificate" placeholder="Upload Your Certificate"/>
+                        </div>
+                      </div>
+                    </div><!-- class="d-flex justify-content-end" -->
+                    <div class="d-flex justify-content-end">
+                      <div class="m-1">
+                        <a class="text-decoration-none" href="#topp">
+                          <button type="button" class="btn btn-outline-danger my-5" onclick="prevSection()">
+                            Previous
+                          </button>
+                        </a>
+                      </div>
+                      <div class="m-1">
+                        <a class="text-decoration-none" href="#topp">
+                          <button type="button" class="btn btn-outline-success my-5" onclick="nextSection()">
+                            Next
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </section><!-- Personal Details Section 3 -->
+                <section id="section3">
+                  <div class="container">
+                    <h3 class="text-center my-2">Personal
+                      Details</h3>
+                    <div class="row">
+                      <div class="row"><!-- Gender -->
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="gender">Gender</label>
+                          <select class="form-control" id="gender" name="gender">
+                            <option value="">Choose Gender</option>
+                            <option value="m" t-att-selected="student_info.gender == &apos;m&apos;">Male</option>
+                            <option value="f" t-att-selected="student_info.gender == &apos;f&apos;">Female</option>
+                            <option value="o" t-att-selected="student_info.gender == &apos;o&apos;">
+                              Others</option>
+                          </select>
+                        </div><!-- Maritial Status -->
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="marital_status">
+                            Maritial Status </label>
+                          <select class="form-control" id="marital_status" t-att-value="student_info.marital_status" name="marital_status">
+                            <option>Choose Maritial Status</option>
+                            <option value="single" t-att-selected="student_info.marital_status == &apos;single&apos;">
+                              Single</option>
+                            <option value="married" t-att-selected="student_info.marital_status == &apos;married&apos;">
+                              Married</option>
+                            <option value="widowed" t-att-selected="student_info.marital_status == &apos;widowed&apos;">
+                              Widowed
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row my-1">
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="religion">
+                            Religion</label>
+                          <select class="form-control" id="religion" t-att-value="student_info.religion" name="religion">
+                            <option>Choose
+                              Religion</option>
+                            <option value="islam" t-att-selected="student_info.religion == &apos;islam&apos;">Islam</option>
+                            <option value="christianity" t-att-selected="student_info.religion == &apos;christianity&apos;">
+                              Christian</option>
+                            <option value="hinduism" t-att-selected="student_info.religion == &apos;hinduism&apos;">Hindu</option>
+                            <option value="other" t-att-selected="student_info.religion == &apos;other&apos;">
+                              Others</option>
+                          </select>
+                        </div>
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="blood_group">Blood
+                            Group</label>
+                          <select class="form-control" id="blood_group" t-att-value="student_info.blood_group" name="blood_group">
+                            <option>Choose
+                              Blood Group</option>
+                            <option value="A+" t-att-selected="student_info.blood_group == &apos;A+&apos;">
+                              A+ve</option>
+                            <option value="B+" t-att-selected="student_info.blood_group == &apos;B+&apos;">
+                              B+ve</option>
+                            <option value="O+" t-att-selected="student_info.blood_group == &apos;O+&apos;">O+ve</option>
+                            <option value="AB+" t-att-selected="student_info.blood_group == &apos;AB+&apos;">
+                              AB+ve</option>
+                            <option value="A-" t-att-selected="student_info.blood_group == &apos;A-&apos;">A-ve</option>
+                            <option value="B-" t-att-selected="student_info.blood_group == &apos;B-&apos;">
+                              B-ve</option>
+                            <option value="O-" t-att-selected="student_info.blood_group == &apos;O-&apos;">O-ve</option>
+                            <option value="AB-" t-att-selected="student_info.blood_group == &apos;AB-&apos;">
+                              AB-ve</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="row my-1"><!-- Email -->
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="email">
+                            Email</label>
+                          <input type="email" class="form-control" id="email" name="email" t-att-value="student_info.email"/>
+                        </div><!-- <div class="form-group mb-3 col-md-6 col-sm-12">
+                        <label for="alternate_email">
+                            Alternate Email</label>
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="alternate_email"
+                            name="alternate_email"
+                          />
+                        </div> -->
+                      </div>
+                      <div class="row my-1"><!-- Phone Number -->
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="phone">Phone
+                            Number</label>
+                          <input type="tel" class="form-control" id="phone" name="phone" t-att-value="student_info.phone"/>
+                        </div>
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="emergency_contact_info">Emergency
+                            Phone Number</label>
+                          <input type="tel" class="form-control" id="emergency_contact_info" name="emergency_contact_info" t-att-value="student_info.emergency_contact_info"/>
+                        </div>
+                      </div><!-- Address -->
+                      <div class="row my-1">
+                        <div class="col-md-6 col-sm-12">
+                          <h3>Permanent
+                            Address</h3>
+                          <div class="mb-3">
+                            <label for="street" class="form-label">Permanent
+                              Address</label>
+                            <input type="text" class="form-control" id="street" t-att-value="student_info.street" name="street"/>
+                          </div>
+                          <div class="mb-3">
+                            <label for="zip" class="form-label">Permanent
+                              Zip Code</label>
+                            <input type="text" class="form-control" id="zip" t-att-value="student_info.zip" name="zip"/>
+                          </div>
+                          <div class="mb-3">
+                            <label for="permanent_district_id" class="form-label">Permanent
+                              District</label>
+                            <select class="form-control" id="permanent_district_id" t-att-value="student_info.permanent_district_id" name="permanent_district_id">
+                              <option>Choose
+                                Permanent District</option>
+                              <option value="dhaka" t-att-selected="student_info.permanent_district_id == &apos;dhaka&apos;">Dhaka</option>
+                              <option value="ctg" t-att-selected="student_info.permanent_district_id == &apos;ctg&apos;">
+                                Chattogram</option>
+                            </select>
+                          </div>
+                          <div class="mb-3">
+                            <label for="country_id" class="form-label">Permanent
+                              Country</label>
+                            <input type="text" class="form-control" id="country_id" t-att-value="student_info.country_id" name="country_id"/>
+                          </div>
+                        </div>
+                        <div class=" col-md-6 col-sm-12">
+                          <h3>Present
+                            Address</h3>
+                          <div class="mb-3">
+                            <label for="present_street" class="form-label">Present
+                              Address</label>
+                            <input type="text" class="form-control" id="present_street" t-att-value="student_info.present_street" name="present_street"/>
+                          </div>
+                          <div class="mb-3">
+                            <label for="present_zip" class="form-label">Present
+                              Zip Code</label>
+                            <input type="text" class="form-control" id="present_zip" t-att-value="student_info.present_zip" name="present_zip"/>
+                          </div>
+                          <div class="mb-3">
+                            <label for="present_district_id" class="form-label">Present
+                              District</label>
+                            <select class="form-control" id="present_district_id" t-att-value="student_info.present_district_id" name="present_district_id">
+                              <option>Choose
+                                Present District</option>
+                              <option value="dhaka" t-att-selected="student_info.present_district_id == &apos;dhaka&apos;">Dhaka</option>
+                              <option value="ctg" t-att-selected="student_info.present_district_id == &apos;ctg&apos;">
+                                Chattogram</option>
+                            </select>
+                          </div>
+                          <div class="mb-3">
+                            <label for="present_country_id" class="form-label">Present
+                              Country</label>
+                            <input type="text" class="form-control" id="present_country_id" t-att-value="student_info.present_country_id" name="present_country_id"/>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-check text-center p-5">
+                        <input class="form-check-input" type="checkbox" id="is_permanent_present_address_same" t-att-value="student_info.is_permanent_present_address_same" name="is_permanent_present_address_same"/>
+                        <label class="form-check-label" for="is_permanent_present_address_same`">Present
+                          Address Same as Permanent Address</label>
+                      </div><!-- Personal Information  -->
+                      <div class="row my-1">
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="whatsapp_number" class="form-label">Whatsapp
+                            No.</label>
+                          <input type="text" class="form-control" id="whatsapp_number" t-att-value="student_info.whatsapp_number" name="whatsapp_number"/>
+                        </div>
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="social_network" class="form-label">Social
+                            Network ID.</label>
+                          <input type="text" class="form-control" id="social_network" t-att-value="student_info.social_network" name="social_network"/>
+                        </div>
+                      </div><!-- Nationality -->
+                      <div class="row my-1">
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="nationality">
+                            Nationality</label>
+                          <select class="form-control" id="nationality" name="nationality" t-att-value="student_info.nationality">
+                            <option>Choose
+                              Nationality</option>
+                            <option>
+                              Bangladeshi</option>
+                            <option>Pakistani</option>
+                            <option>American</option>
+                            <option>
+                              British</option>
+                            <option>Vikings</option>
+                            <option>Ottoman</option>
+                          </select>
+                        </div>
+                        <div class="form-group mb-3 col-md-6 col-sm-12 ">
+                          <label for="national_id_no" class="form-label">National
+                            ID
+                            No.</label>
+                          <input type="text" class="form-control" id="national_id_no" t-att-value="student_info.national_id_no" name="national_id_no"/>
+                        </div>
+                      </div><!-- Passport -->
+                      <div class="row my-1">
+                        <div class="form-group mb-3 col-md-6 col-sm-12 ">
+                          <label for="nationalID" class="form-label">Passport
+                            ID
+                            No.</label>
+                          <input type="text" class="form-control" id="nationalID"/>
+                        </div>
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="passport_expire_date">Passport
+                            Expire Date</label>
+                          <input type="date" class="form-control" id="passport_expire_date" t-att-value="student_info.passport_expire_date" name="passport_expire_date" placeholder="Enter Expire Date of Passport"/>
+                        </div>
+                      </div><!-- Visa -->
+                      <div class="row my-1">
+                        <div class="form-group mb-3 col-md-6 col-sm-12 ">
+                          <label for="visa_no" class="form-label">Visa
+                            No.</label>
+                          <input type="text" class="form-control" id="visa_no" t-att-value="student_info.visa_no" name="visa_no"/>
+                        </div>
+                        <div class="form-group mb-3 col-md-6 col-sm-12">
+                          <label for="visa_expire_date">Visa
+                            Expire Date</label>
+                          <input type="date" class="form-control" id="visa_expire_date" t-att-value="student_info.visa_expire_date" name="visa_expire_date" placeholder="Enter Expire Date of Visa"/>
+                        </div>
+                      </div><!-- PLease Tick -->
+                      <div class="row my-2 ">
+                        <h6>Please
+                          Tick How You Know Daffodil International
+                          University(DIU)</h6>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="know_the_diu_from_website" t-att-selected="student_info.know_the_diu_from_website == &apos;know_the_diu_from_website&apos;" name="know_the_diu_from_website"/>
+                          <label class="form-check-label" for="know_the_diu_from_website">From,DIU
+                            Website</label>
+                        </div>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="know_the_diu_from_social_media" t-att-value="student_info.know_the_diu_from_social_media" name="know_the_diu_from_social_media"/>
+                          <label class="form-check-label" for="know_the_diu_from_social_media">Social
+                            Media</label>
+                        </div>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="know_the_diu_from_daffodil_family" t-att-value="student_info.know_the_diu_from_daffodil_family" name="know_the_diu_from_daffodil_family"/>
+                          <label class="form-check-label" for="know_the_diu_from_daffodil_family">Daffodil
+                            Family</label>
+                        </div>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="know_the_diu_from_diu_employee" t-att-value="student_info.know_the_diu_from_diu_employee" name="know_the_diu_from_diu_employee"/>
+                          <label class="form-check-label" for="know_the_diu_from_diu_employee">DIU
+                            Employee</label>
+                        </div>
+                      </div>
+                      <div class="row my-2">
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="know_the_diu_from_newspaper" t-att-value="student_info.know_the_diu_from_newspaper" name="know_the_diu_from_newspaper"/>
+                          <label class="form-check-label" for="know_the_diu_from_newspaper">
+                            Newspaper</label>
+                        </div>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="know_the_diu_from_sms" t-att-value="student_info.know_the_diu_from_sms" name="know_the_diu_from_sms"/>
+                          <label class="form-check-label" for="know_the_diu_from_sms">
+                            SMS</label>
+                        </div>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" t-att-value="student_info.know_the_diu_from_diu_student" name="know_the_diu_from_diu_student" id="know_the_diu_from_diu_student"/>
+                          <label class="form-check-label" for="know_the_diu_from_diu_student">DIU
+                            Student</label>
+                        </div>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="know_the_diu_from_others" t-att-value="student_info.know_the_diu_from_others" name="know_the_diu_from_others"/>
+                          <label class="form-check-label" for="know_the_diu_from_others">
+                            Others</label>
+                        </div>
+                      </div><!-- Tick the following if applicable -->
+                      <div class="row">
+                        <h6>Tick
+                          the following if applicable</h6>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="is_parents_freedom_fighter" t-att-value="student_info.is_parents_freedom_fighter" name="is_parents_freedom_fighter"/>
+                          <label class="form-check-label" for="is_parents_freedom_fighter">Parent
+                            is Freedom Fighter</label>
+                        </div>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="is_tribal" name="is_tribal" t-att-value="student_info.is_tribal"/>
+                          <label class="form-check-label" for="is_tribal">Are
+                            you a
+                            Tribal</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="is_physical_disorder" name="is_physical_disorder" t-att-value="student_info.is_physical_disorder"/>
+                          <label class="form-check-label" for="is_physical_disorder">Are
+                            you a Physically
+                            Disorder</label>
+                        </div>
+                        <div class="form-check col">
+                          <input class="form-check-input" type="checkbox" id="is_first_division_player" t-att-value="student_info.is_first_division_player" name="is_first_division_player"/>
+                          <label class="form-check-label" for="is_first_division_player">Are
+                            you a
+                            First Division Player</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <div class="m-1">
+                        <a class="text-decoration-none" href="#topp">
+                          <button type="button" class="btn btn-outline-danger my-5" onclick="prevSection()">
+                            Previous
+                          </button>
+                        </a>
+                      </div>
+                      <div class="m-1">
+                        <a class="text-decoration-none" href="#topp">
+                          <button type="button" class="btn btn-outline-success my-5" onclick="nextSection()">
+                            Next
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </section><!-- Family Details Section 4 -->
+                <section id="section4">
+                  <div class="container">
+                    <h2>Parent&apos;s
+                      Details</h2>
+                    <div class="row"><!-- Fathers INformation -->
+                      <div class="col">
+                        <span>Father&apos;s Information</span>
+                        <div class="input-group">
+                          <span class="input-group-text">First &amp; Last name</span>
+                          <input type="text" id="father_name" t-att-value="student_info.father_name" name="father_name" aria-label="First name" class="form-control"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="father_contact_number">
+                            Contact</label>
+                          <input type="text" class="form-control" id="father_contact_number" t-att-value="student_info.father_contact_number" name="father_contact_number" placeholder="Enter Father&apos;s Number"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="father_email">
+                            Email</label>
+                          <input type="email" class="form-control" id="father_email" t-att-value="student_info.father_email" name="father_email" placeholder="Enter Father&apos;s Email"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="father_national_id">National
+                            ID</label>
+                          <input type="text" class="form-control" id="father_national_id" t-att-value="student_info.father_national_id" name="father_national_id" placeholder="Enter Father&apos;s Email"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="father_passport">Passport
+                            ID</label>
+                          <input type="text" class="form-control" id="father_passport" name="father_passport" t-att-value="student_info.father_passport" placeholder="Enter Father&apos;s Passport ID"/>
+                        </div>
+                        <div class="form-group mb-3 col">
+                          <label for="father_birthday">Date
+                            Of Birth</label>
+                          <input type="date" class="form-control" id="father_birthday" t-att-value="student_info.father_birthday" name="father_birthday" placeholder="Enter Date of Birth"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="father_age">
+                            Age</label>
+                          <input type="text" class="form-control" id="father_age" t-att-value="student_info.father_age" name="father_age" placeholder="Enter Your Father&apos;s Age"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="father_occupation">
+                            Occupation</label>
+                          <input type="text" class="form-control" id="father_occupation" t-att-value="student_info.father_occupation" name="father_occupation" placeholder="Enter Your Father&apos;s Occupation"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="father_designation">
+                            Designation</label>
+                          <input type="text" class="form-control" id="father_designation" name="father_designation" t-att-value="student_info.father_designation" placeholder="Enter Your Father&apos;s Designation"/>
+                        </div>
+                        <div class="form-group mb-3 ">
+                          <label for="father_annual_income">
+                            Annual
+                            Income</label>
+                          <div class="input-group">
+                            <input id="father_annual_income" t-att-value="student_info.father_annual_income" name="father_annual_income" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">
+                              0.00</span>
+                          </div>
+                        </div>
+                      </div><!-- Mothers INformation -->
+                      <div class="col">
+                        <span>Mother&apos;s
+                          Information</span>
+                        <div class="input-group">
+                          <span class="input-group-text">First &amp; Last name</span>
+                          <input type="text" id="mother_name" t-att-value="student_info.mother_name" name="mother_name" aria-label="First name" class="form-control"/>
+                        </div>
+                        <div class="form-group  mb-3">
+                          <label for="mother_contact_number">
+                            Contact</label>
+                          <input type="text" class="form-control" id="mother_contact_number" t-att-value="student_info.mother_contact_number" name="mother_contact_number" placeholder="Enter Mother&apos;s Number"/>
+                        </div>
+                        <div class="form-group  mb-3">
+                          <label for="mother_email">
+                            Email</label>
+                          <input type="email" class="form-control" id="mother_email" t-att-value="student_info.mother_email" name="mother_email" placeholder="Enter Mother&apos;s Email"/>
+                        </div>
+                        <div class="form-group  mb-3">
+                          <label for="mother_national_id">National
+                            ID</label>
+                          <input type="text" class="form-control" id="mother_national_id" name="mother_national_id" t-att-value="student_info.mother_national_id" placeholder="Enter Mother&apos;s Email"/>
+                        </div>
+                        <div class="form-group  mb-3">
+                          <label for="mother_passport">Passport
+                            ID</label>
+                          <input type="text" class="form-control" id="mother_passport" t-att-value="student_info.mother_passport" name="mother_passport" placeholder="Enter Mother&apos;s Passport ID"/>
+                        </div>
+                        <div class="form-group  mb-3 col">
+                          <label for="mother_birthday">Date
+                            Of Birth</label>
+                          <input type="date" class="form-control" id="mother_birthday" t-att-value="student_info.mother_birthday" name="mother_birthday" placeholder="Enter Date of Birth"/>
+                        </div>
+                        <div class="form-group  mb-3">
+                          <label for="mother_age">
+                            Age</label>
+                          <input type="text" class="form-control" id="mother_age" t-att-value="student_info.mother_age" name="mother_age" placeholder="Enter Your Mother&apos;s Age"/>
+                        </div>
+                        <div class="form-group  mb-3">
+                          <label for="mother_occupation">
+                            Occupation</label>
+                          <input type="text" class="form-control" id="mother_occupation" name="mother_occupation" t-att-value="student_info.mother_occupation" placeholder="Enter Your Mother&apos;s Occupation"/>
+                        </div>
+                        <div class="form-group  mb-3">
+                          <label for="mother_designation">
+                            Designation</label>
+                          <input type="text" class="form-control" id="mother_designation" t-att-value="student_info.mother_designation" name="mother_designation" placeholder="Enter Your Mother&apos;s Designation"/>
+                        </div>
+                        <div class="form-group  mb-3 ">
+                          <label>Annual
+                            Income</label>
+                          <div class="input-group">
+                            <input id="mother_annual_income" t-att-value="student_info.mother_annual_income" name="mother_annual_income" type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                            <span class="input-group-text">$</span>
+                            <span class="input-group-text">
+                              0.00</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- LOcal Guardian -->
+                    <div class="row my-5">
+                      <h6 class="m-3">Local
+                        Guardian</h6>
+                      <div class="col">
+                        <div>
+                          <div class="input-group">
+                            <span class="input-group-text">First &amp; Last name</span>
+                            <input type="text" id="local_guardian_name" t-att-value="student_info.local_guardian_name" name="local_guardian_name" aria-label="First name" class="form-control"/>
+                          </div>
+                        </div>
+                        <div class="form-group  mb-3">
+                          <label for="local_guardian_email">
+                            Email</label>
+                          <input type="email" class="form-control" id="local_guardian_email" name="local_guardian_email" t-att-value="student_info.local_guardian_email" placeholder="Enter Local Guardian&apos;s Email"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="local_guardian_contact_number">
+                            Contact</label>
+                          <input type="text" class="form-control" id="local_guardian_contact_number" name="local_guardian_contact_number" t-att-value="student_info.local_guardian_contact_number" placeholder="Enter Local Guardian&apos;s Number"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="local_guardian_national_id">National
+                            ID</label>
+                          <input type="text" class="form-control" id="local_guardian_national_id" name="local_guardian_national_id" t-att-value="student_info.local_guardian_national_id" placeholder="Enter Local Guardian&apos;s National Id"/>
+                        </div>
+                        <div class="form-group mb-3 col ">
+                          <label for="local_guardian_passport" class="form-label">Passport
+                            ID No.</label>
+                          <input type="text" class="form-control" t-att-value="student_info.local_guardian_passport" name="local_guardian_passport" id="local_guardian_passport"/>
+                        </div>
+                        <div class="form-group mb-3">
+                          <label for="local_guardian_relation">
+                            Relationship</label>
+                          <input type="text" class="form-control" id="local_guardian_relation" t-att-value="student_info.local_guardian_relation" name="local_guardian_relation" placeholder="Enter Your Relationship with Local Guardian"/>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div>
+                          <label for="local_guardian_street" class="form-label">Present
+                            Address</label>
+                          <input type="text" class="form-control" t-att-value="student_info.local_guardian_street" name="local_guardian_street" id="local_guardian_street"/>
+                        </div>
+                        <div class="mb-3">
+                          <label for="local_guardian_zip" class="form-label">Present
+                            Zip Code</label>
+                          <input type="text" class="form-control" id="local_guardian_zip" t-att-value="student_info.local_guardian_zip" name="local_guardian_zip"/>
+                        </div>
+                        <div class="mb-3">
+                          <label for="local_guardian_state_id" class="form-label">Present
+                            District</label>
+                          <input type="text" class="form-control" t-att-value="student_info.local_guardian_state_id" name="local_guardian_state_id" id="local_guardian_state_id"/>
+                        </div>
+                        <div class="mb-3">
+                          <label for="local_guardian_country_id" class="form-label">Present
+                            Country</label>
+                          <input type="text" class="form-control" name="local_guardian_country_id" t-att-value="student_info.local_guardian_country_id" id="local_guardian_country_id"/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <div class="m-1">
+                        <a class="text-decoration-none" href="#topp">
+                          <button type="button" class="btn btn-outline-danger my-5" onclick="prevSection()">
+                            Previous
+                          </button>
+                        </a>
+                      </div>
+                      <div class="m-1">
+                        <a class="text-decoration-none" href="#topp">
+                          <button type="button" class="btn btn-outline-success my-5" onclick="nextSection()">
+                            Next
+                          </button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </section><!-- Payment Details Section -->
+                <section id="section5">
+                  <div class="container">
+                    <h2>Invoice
+                      &amp; Payment Details</h2>
+                    <h6>Admission Form Fee</h6>
+                    <div>
+                      <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                          <div class="form-group mb-3">
+                            <label>Invoice</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                              <span class="input-group-text">
+                                ৳</span>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label>Total
+                              Amount</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                              <span class="input-group-text">৳</span>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label>Amount
+                              Paid</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                              <span class="input-group-text">৳</span>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label>Amount
+                              Due</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                              <span class="input-group-text">৳</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <div class="mb-3">
+                            <label for="payment_status" class="form-label">Payment
+                              Status</label>
+                            <input type="text" class="form-control" id="payment_status"/>
+                          </div>
+                          <div class="mb-3">
+                            <label for="payment_mediums" class="form-label">Payment
+                              Mediums</label>
+                            <input type="text" class="form-control" id="payment_mediums"/>
+                          </div>
+                          <div class="form-group mb-3 ">
+                            <label for="paymentDate">Date
+                              Of Payment</label>
+                            <input type="date" class="form-control" id="paymentDate"/>
+                          </div>
+                        </div>
+                      </div>
+                      <h4 class="my-3">Admission
+                        Form Fees</h4>
+                      <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                          <div class="form-group mb-3">
+                            <label>Invoice</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                              <span class="input-group-text">৳</span>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label>Total
+                              Amount</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                              <span class="input-group-text">৳</span>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label>Amount
+                              Paid</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                              <span class="input-group-text">৳</span>
+                            </div>
+                          </div>
+                          <div class="form-group mb-3">
+                            <label>Amount
+                              Due</label>
+                            <div class="input-group">
+                              <input type="text" class="form-control" aria-label="Dollar amount (with dot and two decimal places)"/>
+                              <span class="input-group-text">৳</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                          <div>
+                            <label for="payment_status" class="form-label">Payment
+                              Status</label>
+                            <input type="text" class="form-control" id="payment_status"/>
+                          </div>
+                          <div>
+                            <label for="payment_mediums" class="form-label">Payment
+                              Mediums</label>
+                            <input type="text" class="form-control" id="payment_mediums"/>
+                          </div>
+                          <div class="form-group mb-3 col-md-6 col-sm-12">
+                            <label for="paymentDate">Date
+                              Of Payment</label>
+                            <input type="date" class="form-control" id="paymentDate"/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <div class="m-1">
+                        <a class="text-decoration-none" href="#topp">
+                          <button type="button" class="btn btn-outline-danger " onclick="prevSection()">
+                            Previous
+                          </button>
+                        </a>
+                      </div>
+                      <div class="m-1">
+                        <div>
+                          <button type="submit" name="update" class="btn btn-primary">
+                            Update</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              </t>
+            </form>
+          </body>
+        </div>
+      </t>
+    </template><!-- Thank You Page -->
+    <record id="patient_thanks" model="website.page">
+      <field name="name">
+        Thanks</field>
+      <field name="type">qweb</field>
+      <field name="url">/applicant-thank-you</field>
+      <field name="website_published">True</field>
+      <field name="key">
+        smartedu_portal.applicant_thanks</field>
+      <field name="arch" type="xml">
+        <t name="Thanks" t-name="smartedu_portal.applicant_thanks">
+          <t t-call="portal.portal_layout">
+            <div>
+              <h1>Thanks</h1>
+            </div>
+          </t>
+        </t>
+      </field>
+    </record><!-- Parent Deshboard -->
+    <template id="se_parent_template" name="My Parent Template">
+      <t t-call="portal.portal_layout">
+        <t t-foreach="info" t-as="info"/>
+        <div class="container ">
+          <div class="row">
+            <!-- <div class="container p-5 align-items-center ">
+              <div class="row  ">
+                <div class="col-sm-12 col-md-12">
+                  <div class="card align-items-center" style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);">
+                    <div class=" mt-3 align-items-center">
+                      <form>
+                        <div class="mb-3 ">
+                          <label for="exampleInputOpinion" class="form-label">Please give us your valueable opinion:</label>
+                          <input type="text" class=" ms-1 me-1" id="example"></input>
+                          <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-md-4 col-sm-12 p-2  ">
+              <div style="background: linear-gradient(to bottom, #7f1821ff, #000000); box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);" class="card">
+                <div class="card-header fw-5 text-white">Student  Infromation</div>
+                <div class="my-2 card-body">
+                  <div>
+                    <div class="text-center">
+                      <img t-attf-src="data:image/png;base64,{{info.stu_image}}" alt="avatar" style="height: 120px;" class="img-thumbnail"></img>
+                    </div>
+                  </div>
+                  <hr/>
+                  <div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">Student 
+                        Name:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.name"/>
+                      </div>
+                    </div><!-- <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">Date
+                        of Birth:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.birth_date"/>
+                      </div>
+                    </div> --><!-- <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">Blood
+                        Group:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.blood_group"/>
+                      </div>
+                    </div> --><!-- <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Email:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.email"/>
+                      </div>
+                    </div> -->
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Student ID:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.student_id_string"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Gender:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.gender"/>
+                      </div>
+                    </div><!-- <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Language:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.lang"/>
+                      </div>
+                    </div> --><!-- <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Mobile:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.phone"/>
+                      </div>
+                    </div> -->
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Attendance:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.phone"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Result:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.phone"/>
+                      </div>
+                    </div>
+                    <div class="row my-1">
+                      <div class="col-sm-5 fw-bold">
+                        Payment:</div>
+                      <div class="col-sm-7">
+                        <t t-esc="info.phone"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8  col-sm-12 p-2  "><!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+              <div class="card" style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);">
+                <div class="card-header bg-dark text-white">
+                  Student Progress
+                </div>
+                <div class="card-body"><!-- <canvas id="myChart"></canvas> -->
+                  <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+                </div>
+              </div><!-- Graph Script 'Do Not Touch Without permission' -->
+              <script>
+                    const xValues = [100,200,300,400,500,600,700,800,900,1000];
+                    new Chart(&quot;myChart&quot;, {
+                      type: &quot;line&quot;,
+                      data: {
+                        labels: xValues,
+                        datasets: [{ 
+                          data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
+                          borderColor: &quot;red&quot;,
+                          fill: false
+                        }, { 
+                          data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
+                          borderColor: &quot;green&quot;,
+                          fill: false
+                        }, { 
+                          data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
+                          borderColor: &quot;blue&quot;,
+                          fill: false
+                        }]
+                      },
+                      options: {
+                        legend: {display: false}
+                      }
+                    });
+                    </script><!-- <script>
+                window.onload = function() {
+                var ctx = document.getElementById(&apos;myChart&apos;).getContext(&apos;2d&apos;);
+                var chart = new Chart(ctx, {
+                type: &apos;bar&apos;,
+                data: {
+                labels: [&apos;Red&apos;, &apos;Blue&apos;, &apos;Yellow&apos;, &apos;Green&apos;, &apos;Purple&apos;, &apos;Orange&apos;],
+                datasets: [{
+                label: &apos;# of Votes&apos;,
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                &apos;rgba(255, 99, 132, 0.2)&apos;,
+                &apos;rgba(54, 162, 235, 0.2)&apos;,
+                &apos;rgba(255, 206, 86, 0.2)&apos;,
+                &apos;rgba(75, 192, 192, 0.2)&apos;,
+                &apos;rgba(153, 102, 255, 0.2)&apos;,
+                &apos;rgba(255, 159, 64, 0.2)&apos;
+                ],
+                borderColor: [
+                &apos;rgba(255, 99, 132, 1)&apos;,
+                &apos;rgba(54, 162, 235, 1)&apos;,
+                &apos;rgba(255, 206, 86, 1)&apos;,
+                &apos;rgba(75, 192, 192, 1)&apos;,
+                &apos;rgba(153, 102, 255, 1)&apos;,
+                &apos;rgba(255, 159, 64, 1)&apos;
+                ],
+                borderWidth: 1
+                }]
+                },
+                options: {
+                scales: {
+                yAxes: [{
+                ticks: {
+                beginAtZero: true
+                }
+                }]
+                }
+                }
+                });
+                };
+              </script> -->
+            </div>
+          </div>
+        </div>
+        <div class="container p-5 align-items-center ">
+          <div class="row  ">
+            <div class="col-sm-12 col-md-12">
+              <div class="card align-items-center" style="box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);">
+              <div class=" mt-3 align-items-center">
+                  <form>
+                    <div class="mb-3 ">
+                      <label for="exampleInputOpinion" class="form-label">Please give us your valueable opinion:</label>
+                      <input type="text" class=" ms-1 me-1" id="example"></input>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    
+                  </form>
+                </div>
+                <div class="card-body align-items-center">
+                  <h5 class="card-title fw-bold text-center">“The best inheritance a parent can give his children is a few minutes of his time each day.”  A. Battista.</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+    </template>
+  </data>
+</odoo>

@@ -1,0 +1,170 @@
+._container {
+  background-color: #d5caec57;
+  /* background-color: #7f1821ff; */
+  color: #00000088;
+  padding: 3rem;
+}
+
+.color1 {
+  background-color: rgba(178, 219, 233, 0.432);
+}
+
+.color2 {
+  background-color:#d5caec57;
+}
+
+.color3 {
+  background-color: #d5caec57;
+}
+
+.color4 {
+  background-color: #d5caec57;
+}
+.color5 {
+  background-color: #d5caec57;
+}
+
+.minus_margin {
+  /* margin-right: -6.8rem */
+  margin: auto -5vh;
+}
+
+.height {
+  height: 10vh;
+  /* max-height: 5rem; */
+}
+
+.hidden {
+  display: none;
+}
+
+section {
+  display: none;
+}
+
+.step {
+  clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 50%, 0% 0%);
+}
+
+.main_container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  margin: auto;
+  gap: 1rem;
+  width: 75%;
+  background-color: rgba(255, 255, 255, 0.575);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 576px) {
+  .step {
+    clip-path: polygon(80% 0%, 100% 50%, 80% 100%, 0% 100%, 0% 50%, 0% 0%);
+  }
+}
+
+@media (min-width: 768px) {
+  .step {
+    clip-path: polygon(85% 0%, 100% 50%, 85% 100%, 0% 100%, 0% 50%, 0% 0%);
+  }
+}
+
+@media (min-width: 992px) {
+  .step {
+    clip-path: polygon(90% 0%, 100% 50%, 90% 100%, 0% 100%, 0% 50%, 0% 0%);
+  }
+}
+
+@media (min-width: 1200px) {
+  .step {
+    clip-path: polygon(95% 0%, 100% 50%, 95% 100%, 0% 100%, 0% 50%, 0% 0%);
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .main_container {
+    width: 85%;
+    display: flex;
+  }
+
+  #step1 > h6,
+  #step2 > h6,
+  #step3 > h6,
+  #step4 > h6,
+  #step5 > h6 {
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+
+  .height {
+    height: 6vh;
+  }
+  .minus_margin {
+    margin: auto -1.5rem;
+  }
+}
+/* Graph Chart */
+/* .graph-chart {
+  display: inline-block;
+  width: 200px;
+  height: 120px;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.graph-chart ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.graph-chart li {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 20%;
+  height: 100%;
+  position: relative;
+}
+
+.graph-chart li span {
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  border-radius: 5px;
+  transition: height 0.5s ease-in-out;
+}
+
+.graph-chart li p {
+  margin: 0;
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+/* Update the span's height to represent the data */
+.graph-chart li:nth-child(1) span {
+  height: 20%;
+}
+
+.graph-chart li:nth-child(2) span {
+  height: 40%;
+}
+
+.graph-chart li:nth-child(3) span {
+  height: 60%;
+}
+
+.graph-chart li:nth-child(4) span {
+  height: 80%;
+} */
+
+.graph-chart li:nth-child(5) span {
+  height: 100%;
+}
